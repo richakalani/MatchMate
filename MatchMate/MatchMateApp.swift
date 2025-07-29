@@ -13,7 +13,7 @@ struct MatchMateApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MatchMateRouter.getMatMateView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

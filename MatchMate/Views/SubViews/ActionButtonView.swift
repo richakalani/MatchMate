@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ActionButtonView: View {
+    var actionButtonClick: (User) -> Void =  {_ in}
+    @Binding var user: User
     var body: some View {
         HStack(spacing: UIScreen.main.bounds.width * 0.4) {
                  Button(action: {
-                     print("Declined")
+                     user.isAccepted = false
+                     actionButtonClick(user)
                  }) {
                      Image(systemName: "xmark")
                          .font(.system(size: 24, weight: .bold))
@@ -22,7 +25,8 @@ struct ActionButtonView: View {
                          .shadow(radius: 5)
                  }
                  Button(action: {
-                     print("Accepted")
+                     user.isAccepted = true
+                     actionButtonClick(user)
                  }) {
                      Image(systemName: "checkmark")
                          .font(.system(size: 24, weight: .bold))
@@ -34,8 +38,4 @@ struct ActionButtonView: View {
                  }
              }
     }
-}
-
-#Preview {
-    ActionButtonView()
 }

@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct MatchMateView: View {
-    @State private var selectedIndex: Int = 0
     @StateObject var presenter: MatchMatePresenter
     init(presenter: MatchMatePresenter) {
-        _presenter = StateObject(wrappedValue: presenter)
+        self._presenter = StateObject(wrappedValue: presenter)
     }
     var body: some View {
-        TabView(selection: $selectedIndex) {
+        TabView(selection: $presenter.selectedIndex) {
             NavigationStack() {
-               HomeView()
+                HomeView(users: presenter.userData?.users ?? [], actionButtonClick: { response in
+                    presenter.userSelected(user: response)
+                })
+                    .id(presenter.userData?.users?.count ?? 0)
                     .navigationTitle("All Profiles")
             }
             .tabItem {
@@ -27,24 +29,26 @@ struct MatchMateView: View {
             .tag(0)
             
             NavigationStack() {
-               AcceptedAndDeclinedView()
+                AcceptedAndDeclinedView(users: presenter.acceptedUsers)
+                    .id(presenter.acceptedUsers.count)
                     .navigationTitle("Acceptances")
             }
             .tabItem {
                 Label("Acceptances", systemImage: "person.fill.checkmark")
             }
-            .badge("15")
+            .badge(presenter.acceptedUsers.count)
             .tag(1)
             
             NavigationStack() {
-                AcceptedAndDeclinedView()
+                AcceptedAndDeclinedView(users: presenter.rejectedUser)
+                    .id(presenter.rejectedUser.count)
                     .navigationTitle("Declined")
                 
             }
             .tabItem {
                 Label("Declined", systemImage: "person.fill.xmark")
             }
-            .badge("12")
+            .badge(presenter.rejectedUser.count)
             .tag(2)
         }
         .tint(.pink)
@@ -53,7 +57,9 @@ struct MatchMateView: View {
             UITabBarItem.appearance().badgeColor = .systemPink
             UITabBar.appearance().backgroundColor = .systemGray4.withAlphaComponent(0.4)
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemPink]
-            presenter.fetchUserData()
         })
+        .task {
+            presenter.fetchUserData()
+        }
     }
 }

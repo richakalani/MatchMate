@@ -9,8 +9,11 @@ import Combine
 class MatchMatePresenter: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     var matchMateInteractor: MatchMateInteractorInputProtocol?
-   
     @Published var userData: UserData? = nil
+    @Published var  acceptedUsers = [User]()
+    @Published var rejectedUser = [User]()
+    @Published var selectedIndex: Int = 0
+    
     func fetchUserData() {
         matchMateInteractor?.fetchUsers()
             .receive(on: DispatchQueue.main)
@@ -26,5 +29,16 @@ class MatchMatePresenter: ObservableObject {
                 self.userData = userData
             })
             .store(in: &cancellables)
+    }
+    
+    func userSelected(user: User) {
+        userData?.users = userData?.users?.filter({$0.id != user.id})
+        if user.isAccepted == true {
+            acceptedUsers.append(user)
+            selectedIndex = 1
+        } else {
+            rejectedUser.append(user)
+            selectedIndex = 2
+        }
     }
 }

@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct ProfileDetailsView: View {
+    var name: String
+    var location: String
+    var image: String
     var body: some View {
         VStack {
-            Image(systemName: "person")
-                .resizable()
+            AsyncImage(url: URL(string: image))
                 .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.height * 0.3)
-                .foregroundColor(.gray.opacity(0.6))
-            Text("Name & Last Name")
+            Text(name)
                 .font(.system(size: 24, weight: .bold))
                 .foregroundColor(.primary)
                 .multilineTextAlignment(.center)
-            Text("location 2 line tkljfojovkks eiorjfioejr iojfiojsiof")
+            Text(location)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -27,8 +28,4 @@ struct ProfileDetailsView: View {
                 .padding(.horizontal, 16)
         }
     }
-}
-
-#Preview {
-    ProfileDetailsView()
 }

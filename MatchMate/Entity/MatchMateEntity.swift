@@ -9,12 +9,12 @@ import Foundation
 
 // MARK: - UserData
 struct UserData: Codable {
-    let users: [User]?
+   var users: [User]?
     let total, skip, limit: Int?
 }
 
 // MARK: - User
-struct User: Codable {
+struct User: Codable, Identifiable {
     let id: Int?
     let firstName, lastName, maidenName: String?
     let age: Int?
@@ -34,6 +34,7 @@ struct User: Codable {
     let ein, ssn, userAgent: String?
     let crypto: Crypto?
     let role: Role?
+    var isAccepted: Bool?
 }
 
 // MARK: - Address

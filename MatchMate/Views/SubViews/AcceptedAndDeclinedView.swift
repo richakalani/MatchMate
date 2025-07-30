@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct AcceptedAndDeclinedView: View {
+    var users: [User]
     var body: some View {
         VStack {
             ScrollView {
                 LazyVStack(spacing: 16) {
-                    ForEach(0..<10) { index in
-                       SelectedProfilesView()
+                    ForEach(users) { user in
+                        SelectedProfilesView(name: user.firstName ?? "", location: user.address?.city ?? "", isAccepted: user.isAccepted ??  false, image: user.image ?? "")
                             .frame(maxWidth: .infinity)
                     }
                 }
@@ -21,8 +22,4 @@ struct AcceptedAndDeclinedView: View {
             }
         }
     }
-}
-
-#Preview {
-    AcceptedAndDeclinedView()
 }

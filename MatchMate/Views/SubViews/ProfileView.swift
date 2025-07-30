@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct ProfileView: View {
+    var actionButtonClick: (User) -> Void
+    var name: String
+    var location: String
+    var image: String
+    @Binding var user: User
     var body: some View {
         VStack {
-            ProfileDetailsView()
-            ActionButtonView()
+            ProfileDetailsView(name: name, location: location, image: image)
+            ActionButtonView(actionButtonClick: actionButtonClick, user: $user)
         }
         .padding()
         .background(Color.white)
@@ -19,8 +24,4 @@ struct ProfileView: View {
         .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
         .frame(maxWidth: .infinity)
     }
-}
-
-#Preview {
-    ProfileView()
 }

@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct SelectedProfilesView: View {
-    var isAccepted: Bool = true
+    var name: String
+    var location: String
+    var isAccepted: Bool
+    var image: String
     var body: some View {
         VStack {
-            ProfileDetailsView()
+            ProfileDetailsView(name: name, location: location, image: image)
             Text(isAccepted ? "Accepted" : "Declined")
                 .font(.headline)
                 .foregroundColor(.white)
@@ -26,8 +29,4 @@ struct SelectedProfilesView: View {
         .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
         .frame(maxWidth: .infinity)
     }
-}
-
-#Preview {
-    ProfileView()
 }

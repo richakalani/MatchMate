@@ -7,6 +7,9 @@
 import Foundation
 final class MatchMateRouter {
     class func getMatMateView() -> MatchMateView {
-        return MatchMateView()
+        let interactor = MatchMateInteractor()
+        let presenter = MatchMatePresenter()
+        presenter.matchMateInteractor = interactor
+        return MatchMateView(presenter: presenter)
     }
 }

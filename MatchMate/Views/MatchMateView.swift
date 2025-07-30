@@ -9,10 +9,14 @@ import SwiftUI
 
 struct MatchMateView: View {
     @State private var selectedIndex: Int = 0
+    @StateObject var presenter: MatchMatePresenter
+    init(presenter: MatchMatePresenter) {
+        _presenter = StateObject(wrappedValue: presenter)
+    }
     var body: some View {
         TabView(selection: $selectedIndex) {
             NavigationStack() {
-                HomeRouter.getHomeView()
+               HomeView()
                     .navigationTitle("All Profiles")
             }
             .tabItem {
@@ -23,7 +27,7 @@ struct MatchMateView: View {
             .tag(0)
             
             NavigationStack() {
-                AcceptedAndDeclinedRouter.getAcceptedAndDeclinedView()
+               AcceptedAndDeclinedView()
                     .navigationTitle("Acceptances")
             }
             .tabItem {
@@ -33,7 +37,7 @@ struct MatchMateView: View {
             .tag(1)
             
             NavigationStack() {
-                AcceptedAndDeclinedRouter.getAcceptedAndDeclinedView()
+                AcceptedAndDeclinedView()
                     .navigationTitle("Declined")
                 
             }
@@ -49,10 +53,7 @@ struct MatchMateView: View {
             UITabBarItem.appearance().badgeColor = .systemPink
             UITabBar.appearance().backgroundColor = .systemGray4.withAlphaComponent(0.4)
             UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.systemPink]
+            presenter.fetchUserData()
         })
     }
-}
-
-#Preview {
-    MatchMateView()
 }
